@@ -4,7 +4,7 @@ import React from "react";
 const Navbar = () => {
   return (
     <>
-      <div className=" w-full h-[10%] bg-gray-800 border flex items-center justify-between pl-4 pr-4">
+      <div className=" w-full h-[10%] bg-gray-900 border flex items-center justify-between pl-4 pr-4">
         <div className=" flex gap-2 items-center w-auto bg-white p-2 rounded-md max-w-xl">
           <SearchIcon />
           <input

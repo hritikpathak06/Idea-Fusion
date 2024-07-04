@@ -1,86 +1,24 @@
-import React from 'react'
+"use client";
+import SearchSection from "@/components/client/SearchSection";
+import TemplatesSection from "@/components/client/TemplatesSection";
+import React, { useState } from "react";
 
 const page = () => {
+  const [userSearchInput, setUserSearchInput] = useState<string>("");
+
+
+  console.log("User Search: ",userSearchInput)
+
   return (
     <>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
-    <div className=' mt-5 text-white'>
-        <h1>Dashboard</h1>
-    </div>
+      <div>
+        {/* search Section  */}
+        <SearchSection onSearchInput={(value: string) => setUserSearchInput(value)} />
+        {/* Template List Section */}
+        <TemplatesSection userSearchInput = {userSearchInput}/>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;

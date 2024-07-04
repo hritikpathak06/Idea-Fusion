@@ -18,10 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className=" bg-red-300 flex">
-          <div className=" bg-green-200 md:w-[80%] w-full h-screen">
+        <div className="flex">
+          <div className=" md:w-[80%] w-full h-screen">
             <Navbar />
-            <div className=" bg-black max-h-[90%] overflow-scroll">
+            <div className=" bg-black max-h-[90%] h-[90%] overflow-scroll text-white">
               {children}
             </div>
           </div>

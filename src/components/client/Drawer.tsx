@@ -68,7 +68,7 @@ const Drawer = () => {
           </SheetContent>
         </Sheet>
       </div>
-      <div className="md:block hidden bg-gray-800 border h-screen ">
+      <div className="md:block hidden bg-gray-900 border h-screen ">
         <div className=" flex items-center justify-center pt-3">
           <Image
             src={"/logo.png"}
@@ -77,6 +77,7 @@ const Drawer = () => {
             alt="idead_fusion"
           />
         </div>
+        <hr className=" mt-9" />
 
         <div className=" flex flex-col gap-5 mt-3 p-4">
           {MenuList.map((item, index) => (
