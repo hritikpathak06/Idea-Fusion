@@ -1,5 +1,27 @@
 export default [
   {
+    name: "Youtube Description",
+    desc: "An AI tool that serves as your personal blog post title writer, generating catchy and viral-worthy titles in your chosen language.",
+    category: "Youtube Tool",
+    icon: "https://cdn-icons-png.flaticon.com/128/2111/2111748.png",
+    slug: "youtube-description",
+    aiPrompt:
+      "Generate Youtube description with emoji under 4-5 lines based on topic and outline in rich text editor format",
+    form: [
+      {
+        label: "Enter your blog topic/title",
+        field: "input",
+        name: "topic",
+        required: true,
+      },
+      {
+        label: "Enter youtube Outline here",
+        field: "textarea",
+        name: "outline",
+      },
+    ],
+  },
+  {
     name: "Blog Title",
     desc: "An AI tool that generate blog title depends on yout blog information",
     category: "Blog",
@@ -21,28 +43,7 @@ export default [
       },
     ],
   },
-  {
-    name: "Blog Content",
-    desc: "An AI tool that serves as your personal blog post title writer, generating catchy and viral-worthy titles in your chosen language.",
-    category: "blog",
-    icon: "https://cdn-icons-png.flaticon.com/128/4905/4905454.png",
-    slug: "blog-content-generation",
-    aiPrompt:
-      "Generate Blog Content based on topic and outline in rich text editor format",
-    form: [
-      {
-        label: "Enter your blog topic",
-        field: "input",
-        name: "topic",
-        required: true,
-      },
-      {
-        label: "Enter blog Outline here",
-        field: "textarea",
-        name: "outline",
-      },
-    ],
-  },
+
   {
     name: "Blog Topic Ideas",
     desc: "An AI tool that serves as your personal blog post title writer, generating catchy and viral-worthy titles in your chosen language.",
@@ -83,27 +84,28 @@ export default [
     ],
   },
   {
-    name: "Youtube Description",
+    name: "Blog Content",
     desc: "An AI tool that serves as your personal blog post title writer, generating catchy and viral-worthy titles in your chosen language.",
-    category: "Youtube Tool",
-    icon: "https://cdn-icons-png.flaticon.com/128/2111/2111748.png",
-    slug: "youtube-description",
+    category: "blog",
+    icon: "https://cdn-icons-png.flaticon.com/128/4905/4905454.png",
+    slug: "blog-content-generation",
     aiPrompt:
-      "Generate Youtube description with emoji under 4-5 lines based on topic and outline in rich text editor format",
+      "Generate Blog Content based on topic and outline in rich text editor format",
     form: [
       {
-        label: "Enter your blog topic/title",
+        label: "Enter your blog topic",
         field: "input",
         name: "topic",
         required: true,
       },
       {
-        label: "Enter youtube Outline here",
+        label: "Enter blog Outline here",
         field: "textarea",
         name: "outline",
       },
     ],
   },
+
   {
     name: "Youtube Tags",
     desc: "An AI tool that serves as your personal blog post title writer, generating catchy and viral-worthy titles in your chosen language.",
