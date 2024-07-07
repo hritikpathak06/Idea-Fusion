@@ -1,10 +1,10 @@
+import { config_env } from "@/config/env_config";
+
 const {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
 } = require("@google/generative-ai");
-
-// const apiKey = process.env.GEMINI_API_KEY;
 const apiKey = "AIzaSyDkcr79fxqzIYJ9-1Ge-o9XVsSF-BrI7qY";
 const genAI = new GoogleGenerativeAI(apiKey);
 
