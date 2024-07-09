@@ -1,4 +1,7 @@
 export const config_env = {
   GEMINI_API_KEY: process.env.GEMINI_API_KEY || "",
   NEXT_PUBLIC_DRIZZLE_DB_URL: process.env.NEXT_PUBLIC_DRIZZLE_DB_URL || "",
+  RAZORPAY_PLAN_ID: process.env.RAZORPAY_PLAN_ID,
+  RAZORPAY_API_KEY: process.env.RAZORPAY_API_KEY,
+  RAZORPAY_API_SECRET: process.env.RAZORPAY_API_SECRET,
 };
