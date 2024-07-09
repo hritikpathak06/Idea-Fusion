@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import UsageTrack from "./UsageTrack";
 
 const Drawer = () => {
   const pathname = usePathname();
@@ -68,7 +69,7 @@ const Drawer = () => {
           </SheetContent>
         </Sheet>
       </div>
-      <div className="md:block hidden bg-gray-900 border h-screen ">
+      <div className="md:block hidden bg-gray-900 border h-screen relative ">
         <div className=" flex items-center justify-center pt-3">
           <Image
             src={"/logo.png"}
@@ -96,7 +97,12 @@ const Drawer = () => {
               </Link>
             </>
           ))}
+
+         
         </div>
+        <div className="  text-white absolute  bottom-10  w-full">
+            <UsageTrack />
+          </div>
       </div>
     </>
   );

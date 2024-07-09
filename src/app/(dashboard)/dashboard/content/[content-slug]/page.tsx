@@ -10,8 +10,10 @@ import Tempelates from "@/utils/Tempelates";
 import { useUser } from "@clerk/nextjs";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import moment from "moment";
+import { TotalUsageContext } from "@/app/(context)/UsageContext";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface PageProps {
   params: {
@@ -23,6 +25,7 @@ const Page: React.FC<PageProps> = ({ params }) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [aiModelOutput, setAiModelOutput] = useState<string>("");
+  const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
 
   const { user } = useUser();
 
@@ -33,6 +36,11 @@ const Page: React.FC<PageProps> = ({ params }) => {
   );
 
   const GenerateAIContent = async (formData: any) => {
+    if (totalUsage >= Number(10000)) {
+      alert("Please Buy Some Tokens");
+      router.push("/dashboard/billing");
+      return;
+    }
     setLoading(true);
     const selectedPrompt = selectedTemplate?.aiPrompt;
 
