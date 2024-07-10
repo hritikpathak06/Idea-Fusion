@@ -72,15 +72,20 @@ const UsageTrack = () => {
       console.log("User email is not available");
       return;
     }
-    const result = await db
+
+    console.log("Email: ", email);
+
+    const result: any = await db
       .select()
       .from(UserSubscription)
       .where(eq(UserSubscription.email, email));
 
-    if (result) {
+    if (result[0].email as any) {
       setUserSubscription(true);
       setMaxWords(100000);
     }
+
+    console.log("Result: ", result[0].email);
   };
 
   return (

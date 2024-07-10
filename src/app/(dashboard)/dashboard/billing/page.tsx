@@ -89,6 +89,8 @@ function billing() {
     }
   };
 
+  console.log("User Subscription: ", userSubscription);
+
   return (
     <div>
       <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -111,9 +113,7 @@ function billing() {
                   ₹0{" "}
                 </strong>
 
-                <span className="text-sm font-medium text-gray-700">
-                  /year
-                </span>
+                <span className="text-sm font-medium text-gray-700">/year</span>
               </p>
             </div>
 
