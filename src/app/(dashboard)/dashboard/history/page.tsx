@@ -22,17 +22,17 @@ async function History() {
     return template;
   };
   return (
-    <div className="m-5 p-5 border rounded-lg bg-black">
+    <div className="m-5 p-5 b rounded-lg bg-black">
       <h2 className="font-bold text-3xl">History</h2>
       <p className="text-gray-500">
         Search your previously generate AI content
       </p>
       <div className="grid grid-cols-7 font-bold bg-secondary mt-5 py-3 px-3">
-        <h2 className="col-span-2 bg-black">TEMPLATE</h2>
-        <h2 className="col-span-2 bg-black">AI RESP</h2>
-        <h2 className=" bg-black">DATE</h2>
-        <h2 className="bg-black">WORDS</h2>
-        <h2 className=" bg-black">COPY</h2>
+        <h2 className="col-span-2 text-black">TEMPLATE</h2>
+        <h2 className="col-span-2  text-black">AI RESPONSE</h2>
+        <h2 className=" text-black">DATE</h2>
+        <h2 className=" text-black">WORDS</h2>
+        <h2 className=" text-black">COPY</h2>
       </div>
       {HistoryList.map((item: any, index: number) => (
         <>

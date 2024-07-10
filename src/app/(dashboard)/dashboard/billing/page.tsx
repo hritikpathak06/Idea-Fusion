@@ -8,10 +8,16 @@ import { db } from "@/utils/db";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { config_env } from "@/config/env_config";
+import { UserSubscription } from "@/utils/model";
+import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
 // import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
 function billing() {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
+
+  const { userSubscription, setUserSubscription } = useContext(
+    UserSubscriptionContext
+  );
   // const {userSubscription,setUserSubscription}=useContext(UserSubscriptionContext);
 
   const CreateSubscription = () => {
@@ -57,7 +63,9 @@ function billing() {
       name: "Idea Fusion.ai",
       description: "Monthly Subscription",
       handler: async (resp: any) => {
-        console.log(resp);
+        if (resp) {
+          SaveSubscriptionToDatabase(resp?.razorpay_payment_id);
+        }
       },
     };
     setLoading(false);
@@ -67,58 +75,26 @@ function billing() {
     razorpay.open();
   };
 
-  // const OnPayment = async (subId: string) => {
-  //   const res = await loadScript(
-  //     "https://checkout.razorpay.com/v1/checkout.js"
-  //   );
+  const SaveSubscriptionToDatabase = async (paymentId: string) => {
+    const result = await db.insert(UserSubscription).values({
+      email: user?.primaryEmailAddress?.emailAddress,
+      userName: user?.fullName,
+      active: true,
+      paymnetId: paymentId,
+      joinedDate: moment().format("DD/MM/YY"),
+    });
 
-  //   if (!res) {
-  //     alert("Razropay failed to load!!");
-  //     return;
-  //   }
-  //   const options = {
-  //     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-  //     subscription_id: subId,
-  //     name: "Tubeguruji AI Apps",
-  //     description: "Monthly Subscription",
-  //     handler: async (resp: any) => {
-  //       console.log(resp);
-  //       if (resp) {
-  //         // SaveSubcription(resp?.razorpay_payment_id);
-  //       }
-  //     },
-  //   };
-
-  //   try {
-  //     // @ts-ignore
-  //     const rzp = new window.Razorpay(options);
-  //     rzp.open();
-  //   } catch (e) {
-  //     console.log("Try Again...", e);
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const SaveSubcription = async (paymentId: string) => {
-  //   const result = await db.insert(UserSubscription).values({
-  //     email: user?.primaryEmailAddress?.emailAddress,
-  //     userName: user?.fullName,
-  //     active: true,
-  //     paymentId: paymentId,
-  //     joinDate: moment().format("DD/MM/yyyy"),
-  //   });
-  //   console.log(result);
-  //   if (result) {
-  //     window.location.reload();
-  //   }
-  // };
+    if (result) {
+      window.location.reload();
+    }
+  };
 
   return (
     <div>
       <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <h2 className="text-center font-bold text-3xl my-3">
-          Upgrade With Monthly Plan
+          Upgrade With Yearly Plan
         </h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center md:gap-8">
@@ -132,11 +108,11 @@ function billing() {
               <p className="mt-2 sm:mt-4">
                 <strong className="text-3xl font-bold text-gray-900 sm:text-4xl">
                   {" "}
-                  0${" "}
+                  ₹0{" "}
                 </strong>
 
                 <span className="text-sm font-medium text-gray-700">
-                  /month
+                  /year
                 </span>
               </p>
             </div>
@@ -218,9 +194,15 @@ function billing() {
                   />
                 </svg>
 
-                <span className="text-gray-700"> 1 Month of History </span>
+                <span className="text-gray-700"> 1 Year of History </span>
               </li>
             </ul>
+            <Button
+              className="w-full rounded-full mt-5 p-6"
+              variant="secondary"
+            >
+              {!userSubscription ? "Active Plan" : "Get Started"}
+            </Button>
 
             {/* <a
         href="#"
@@ -242,12 +224,10 @@ function billing() {
               <p className="mt-2 sm:mt-4">
                 <strong className="text-3xl font-bold text-gray-900 sm:text-4xl">
                   {" "}
-                  9.99${" "}
+                  ₹399{" "}
                 </strong>
 
-                <span className="text-sm font-medium text-gray-700">
-                  /month
-                </span>
+                <span className="text-sm font-medium text-gray-700">/year</span>
               </p>
             </div>
 
@@ -333,14 +313,15 @@ function billing() {
             </ul>
 
             <Button
-              disabled={loading}
+              disabled={loading || userSubscription}
               onClick={() => CreateSubscription()}
-              className="w-full rounded-full mt-5 p-6"
+              className={`w-full rounded-full mt-5 p-6 ${
+                userSubscription ? "bg-black text-white hover:bg-black" : ""
+              }`}
               variant="secondary"
             >
               {loading && <Loader2Icon className="animate-spin" />}
-              {/* {userSubscription ? "Active Plan" : "Get Started"} */}
-              GET STARTED
+              {userSubscription ? "Active Plan" : "Get Started"}
             </Button>
           </div>
         </div>

@@ -1,5 +1,7 @@
+import { UserButton } from "@clerk/nextjs";
 import { SearchIcon } from "lucide-react";
 import React from "react";
+import { DrawerForMobileDevices } from "./Drawer";
 
 const Navbar = () => {
   return (
@@ -13,8 +15,11 @@ const Navbar = () => {
             className=" focus:outline-none"
           />
         </div>
-        <div className=" text-white bg-blue-900 p-2 rounded-md cursor-pointer">
-          <h2>Join With Us</h2>
+        <div className="md:block hidden">
+          <UserButton />
+        </div>
+        <div className=" md:hidden">
+          <DrawerForMobileDevices />
         </div>
       </div>
     </>

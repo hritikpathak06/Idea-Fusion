@@ -14,6 +14,8 @@ import React, { useContext, useState } from "react";
 import moment from "moment";
 import { TotalUsageContext } from "@/app/(context)/UsageContext";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
+import { UpdateCreditUsageContext } from "@/app/(context)/UpdateCreditContext";
 
 interface PageProps {
   params: {
@@ -26,6 +28,13 @@ const Page: React.FC<PageProps> = ({ params }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [aiModelOutput, setAiModelOutput] = useState<string>("");
   const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
+  const { userSubscription, setUserSubscription } = useContext(
+    UserSubscriptionContext
+  );
+
+  const { updatedCredit, setUpdatedCredit } = useContext(
+    UpdateCreditUsageContext
+  );
 
   const { user } = useUser();
 
@@ -36,7 +45,7 @@ const Page: React.FC<PageProps> = ({ params }) => {
   );
 
   const GenerateAIContent = async (formData: any) => {
-    if (totalUsage >= Number(10000)) {
+    if (totalUsage >= Number(10000) && !userSubscription) {
       alert("Please Buy Some Tokens");
       router.push("/dashboard/billing");
       return;
@@ -58,6 +67,7 @@ const Page: React.FC<PageProps> = ({ params }) => {
 
     // console.log("Result", result.response.text());
     setLoading(false);
+    setUpdatedCredit(Date.now());
   };
 
   const saveIntoDatabase = async (

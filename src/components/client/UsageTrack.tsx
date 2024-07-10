@@ -1,19 +1,30 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { currentUser } from "@clerk/nextjs/server";
 import { useUser } from "@clerk/nextjs";
 import { db } from "@/utils/db";
-import { AIOutput } from "@/utils/model";
+import { AIOutput, UserSubscription } from "@/utils/model";
 import { eq } from "drizzle-orm";
 import { TotalUsageContext } from "@/app/(context)/UsageContext";
+import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
+import { UpdateCreditUsageContext } from "@/app/(context)/UpdateCreditContext";
+import { usePathname, useRouter } from "next/navigation";
 
 const UsageTrack = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const { user } = useUser();
   const [data, setData] = useState<any>([]);
-
-  // const [totalUsage, setTotalUsage] = useState<number>(0);
+  const [maxWords, setMaxWords] = useState(10000);
   const { totalUsage, setTotalUsage } = useContext(TotalUsageContext);
+  const { userSubscription, setUserSubscription } = useContext(
+    UserSubscriptionContext
+  );
+
+  const { updatedCredit, setUpdatedCredit } = useContext(
+    UpdateCreditUsageContext
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -32,7 +43,7 @@ const UsageTrack = () => {
       }
     }
     fetchData();
-  }, [user]);
+  }, [user, updatedCredit]);
 
   const getTotalUsage = async () => {
     let total: any = 0;
@@ -43,7 +54,6 @@ const UsageTrack = () => {
 
     setTotalUsage(total);
   };
-
   useEffect(() => {
     getTotalUsage();
   }, [data, user]);
@@ -53,11 +63,25 @@ const UsageTrack = () => {
       const aiResponses = data.map((item: any) => item.aiResponse);
       console.log("AI Responses:", aiResponses);
     }
+    IsUserSubscribed();
   }, [data]);
 
-  console.log("Data: ", data);
+  const IsUserSubscribed = async () => {
+    const email = user?.primaryEmailAddress?.emailAddress;
+    if (!email) {
+      console.log("User email is not available");
+      return;
+    }
+    const result = await db
+      .select()
+      .from(UserSubscription)
+      .where(eq(UserSubscription.email, email));
 
-  console.log("Total: ", totalUsage);
+    if (result) {
+      setUserSubscription(true);
+      setMaxWords(100000);
+    }
+  };
 
   return (
     <>
@@ -70,15 +94,22 @@ const UsageTrack = () => {
               // style={{ width: (totalUsage / 10000) * 100 }}
               style={{
                 width:
-                  totalUsage / Number(10000) > 1
+                  totalUsage / Number(maxWords) > 1
                     ? 100 + "%"
-                    : (totalUsage / Number(10000)) * 100 + "%",
+                    : (totalUsage / Number(maxWords)) * 100 + "%",
               }}
             ></div>
           </div>
-          <h2 className=" text-sm my-2">{totalUsage}/10000 Credit Used</h2>
+          <h2 className=" text-sm my-2">
+            {totalUsage}/{maxWords} Credit Used
+          </h2>
         </div>
-        <Button className=" w-full my-3" variant="secondary">
+        <Button
+          className=" w-full my-3"
+          variant="secondary"
+          onClick={() => router.push("/dashboard/billing")}
+          disabled={pathname === "/dashboard/billing"}
+        >
           Upgrade
         </Button>
       </div>
