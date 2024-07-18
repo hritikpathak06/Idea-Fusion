@@ -1,35 +1,29 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React from "react";
 
-export default function Home() {
+const page = () => {
   const router = useRouter();
-  const [countdown, setCountdown] = useState(5);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prevCount) => {
-        if (prevCount <= 1) {
-          clearInterval(timer);
-          router.push("/dashboard");
-          return 0;
-        }
-        return prevCount - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [router]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">Technical Issues</h1>
-      <p className="text-lg mb-4">
-        We're experiencing some technical difficulties.
-      </p>
-      <p className="text-lg">
-        Redirecting to dashboard in {countdown} seconds...
-      </p>
+    <div className="h-screen w-screen bg-black flex items-center justify-center flex-col gap-10">
+      <Image
+        src={"/ideafusion.png"}
+        alt="logo"
+        className=" md:h-[70%] md:w-[80%] h-max w-max object-contain border-collapse rounded-xl border-x-slate-500 shadow-inner"
+        height={600}
+        width={600}
+      />
+      <Button
+        onClick={() => router.push("/dashboard")}
+        className=" bg-white text-black w-[30%] hover:bg-white"
+      >
+        Get Started
+      </Button>
     </div>
   );
-}
+};
+
+export default page;
